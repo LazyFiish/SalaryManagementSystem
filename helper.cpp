@@ -513,6 +513,55 @@ bool Helper::getAllDeptInfo(QVector<QStringList> &info)
     return true;
 }
 
+bool Helper::getAllUserInfo(QVector<QStringList> &info)
+{
+    QSqlQuery qury;
+    QString sql=QString("select userId,level from User");
+    if(!qury.exec(sql)){
+        qDebug()<<"getAllUserInfo:sql语句执行失败:"<<sql<<endl;
+        return false;
+    }
+    while(qury.next())
+        info.append(QStringList{qury.value("userId").toString(),qury.value("level").toString()});
+    return true;
+}
+
+bool Helper::addUserRecord(const QStringList &record)
+{
+    if(record.size()<3)
+        return false;
+
+    QSqlQuery qury;
+    QString sql=QString("insert User(userId,password,level) values(%1,%2,%3)").arg(addQuotes(record[0])).arg(addQuotes(record[1])).arg(record[2]);
+    if(!qury.exec(sql)){
+        qDebug()<<"addUserRecord:sql语句执行失败:"<<sql<<endl;
+        return false;
+    }
+    return true;
+}
+
+bool Helper::delUserRecord(const QString &userId)
+{
+    QSqlQuery qury;
+    QString sql=QString("delete from User where userId=%1").arg(addQuotes(userId));
+    if(!qury.exec(sql)){
+        qDebug()<<"delUserRecord:sql语句执行失败:"<<sql<<endl;
+        return false;
+    }
+    return true;
+}
+
+bool Helper::modiUserRecord(const QString &userId,const QString &userPassword)
+{
+    QSqlQuery qury;
+    QString sql=QString("update User set password=%1 where userId=%2").arg(addQuotes(userPassword)).arg(addQuotes(userId));
+    if(!qury.exec(sql)){
+        qDebug()<<"modiUserRecord:sql语句执行失败"<<sql<<endl;
+        return false;
+    }
+    return true;
+}
+
 QString Helper::addQuotes(const QString &str)
 {
     return '\''+str+'\'';

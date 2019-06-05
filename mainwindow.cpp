@@ -451,6 +451,8 @@ bool MainWindow::isLegal(const QStringList &staffRecord)
 
     qDebug()<<isLeave<<' '<<enDate<<' '<<leDate<<endl;
 
+    if(staffRecord[4].size()!=18)
+        return false;
     if(!enDate.isValid())
         return false;
     if(isLeave==true && !leDate.isValid())
@@ -485,6 +487,8 @@ void MainWindow::on_btn_stat_search_clicked()
                     new QStandardItem(record[1]),
                     new QStandardItem(record[2])
                 };
+                for(int i=0;i<6;i++)
+                    itemList[i]->setEditable(false);
                 model->appendRow(itemList);
             }
             beginDate=beginDate.addMonths(1);
@@ -508,6 +512,7 @@ void MainWindow::on_btn_stat_search_clicked()
                 QList<QStandardItem *> itemList;
                 for(int i=0;i<info.size();i++){
                     itemList.append(new QStandardItem(info[i][2]));
+                    itemList[i]->setEditable(false);
                 }
                 model->appendColumn(itemList);
                 labels.append(QString("%1年%2月工资").arg(beginDate.year()).arg(beginDate.month()));
@@ -524,6 +529,8 @@ void MainWindow::on_btn_stat_search_clicked()
             QString sum;
             if(Helper::getMonSalary(QString("%1").arg(beginDate.year()),QString("%1").arg(beginDate.month()),sum)){
                 QList<QStandardItem *> itemList{new QStandardItem(QString("%1年%2月").arg(beginDate.year()).arg(beginDate.month())),new QStandardItem(sum)};
+                itemList[0]->setEditable(false);
+                itemList[1]->setEditable(false);
                 model->appendRow(itemList);
             }
             beginDate=beginDate.addMonths(1);

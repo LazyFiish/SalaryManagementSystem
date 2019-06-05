@@ -15,9 +15,9 @@ int main(int argc, char *argv[])
         qss.close();
     }
 
-    LoginDialog w;
-    w.show();
     Helper::connectDatabase();
 
+    LoginDialog w;
+    w.show();
     return app.exec();
 }

@@ -3,7 +3,8 @@
 #include "helper.h"
 #include <QMessageBox>
 #include <QDebug>
-#include <mainwindow.h>
+#include "mainwindow.h"
+#include "userwindow.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -34,7 +35,10 @@ void LoginDialog::on_pushButton_clicked()
         curUser=user;
         this->close();
         if(curUser.level==0){
-
+            UserWindow *userwindow=new UserWindow();
+            userwindow->setWindowTitle("您好，"+curUser.id+"用户！");
+            userwindow->show();
+            qDebug()<<"login success"<<endl;
         }
         else if(curUser.level==1){
             MainWindow *mainwindow=new MainWindow();

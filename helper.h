@@ -202,7 +202,39 @@ public:
      */
     static bool getMonSalary(const QString &year,const QString &month,QString &monSalary);
 
+    /*
+     * 功能：获取所有部门信息
+     * 入口参数：
+     * 出口参数：info——所有部门的信息，包括部门编号与部门名称
+     * 返回值：成功返回true;失败返回false
+     */
     static bool getAllDeptInfo(QVector<QStringList> &info);
+
+    /*
+     * 功能：获取所有登录用户的信息
+     * 入口参数：
+     * 出口参数：info——所有登录用户的信息
+     * 返回值：成功返回true;失败返回false
+     */
+    static bool getAllUserInfo(QVector<QStringList> &info);
+
+    /*
+     * 功能：添加登录用户记录
+     * 入口参数：record——登录用户信息
+     * 出口参数：
+     * 返回值：成功返回true;失败返回false
+     */
+    static bool addUserRecord(const QStringList &record);
+
+    /*
+     * 功能：删除登录用户记录
+     * 入口参数：userId——登录用户Id
+     * 出口参数：
+     * 返回值：成功返回true，失败返回false
+     */
+    static bool delUserRecord(const QString &userId);
+
+    static bool modiUserRecord(const QString &userId,const QString &userPassword);
 
     static QString addQuotes(const QString &str);
 };
